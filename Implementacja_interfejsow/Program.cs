@@ -13,10 +13,85 @@ namespace Implementacja_interfejsow
             //Sprawdzenie();
             //Krok2();
             //Krok3();
-            Krok4();
+            //Krok4();
+            Krok5();
+
             
 
 
+        }
+        static void Krok6()
+        {
+            var Pracownicy = new List<Pracownik>();
+            Pracownicy.Add(new Pracownik("Jania", new DateTime(2020, 10, 01), 1000));
+            Pracownicy.Add(new Pracownik("Jania", new DateTime(2018, 11, 05), 2000));
+            Pracownicy.Add(new Pracownik("Nowak", new DateTime(2019, 12, 07), 3000));
+            Pracownicy.Add(new Pracownik("Kowalski", new DateTime(2019, 12, 07), 2500));
+            Pracownicy.Add(new Pracownik("Nowakowski", new DateTime(2020, 09, 01), 3000));
+            Pracownicy.Add(new Pracownik("Abacki", new DateTime(2017, 06, 22), 2000));
+            Pracownicy.Add(new Pracownik("Abacki", new DateTime(2017, 06, 22), 3000));
+            Console.WriteLine(Pracownicy);
+            Console.WriteLine("------- Przed sortowaniem -------");
+            foreach (var pracownik in Pracownicy)
+            {
+                Console.WriteLine(pracownik);
+            }
+            Console.WriteLine();
+            Console.WriteLine(string.Join('\n', Pracownicy));
+            Console.WriteLine();
+            Pracownicy.Sort();
+            Console.WriteLine("------- Po sortowaniu -------");
+            foreach (var pracownik in Pracownicy)
+            {
+                Console.WriteLine(pracownik);
+            }
+            //int index = Pracownicy.BinarySearch()
+        }
+        static void Krok5()
+        {
+            var Pracownicy = new List<Pracownik>();
+            Pracownicy.Add(new Pracownik("Jania", new DateTime(2020, 10, 01), 1000));
+            Pracownicy.Add(new Pracownik("Jania", new DateTime(2018, 11, 05), 2000));
+            Pracownicy.Add(new Pracownik("Nowak", new DateTime(2019, 12, 07), 3000));
+            Pracownicy.Add(new Pracownik("Kowalski", new DateTime(2019, 12, 07), 2500));
+            Pracownicy.Add(new Pracownik("Nowakowski", new DateTime(2020, 09, 01), 3000));
+            Pracownicy.Add(new Pracownik("Abacki", new DateTime(2017, 06, 22), 2000));
+            Pracownicy.Add(new Pracownik("Abacki", new DateTime(2017, 06, 22), 3000));
+            var listaInt = new List<int> { 3,7,9,1,0,2,8,6,9,3,4};
+
+            Console.WriteLine("------- Lista pracownikow -------");
+            Console.WriteLine(string.Join('\n', Pracownicy));
+            Console.WriteLine($"Lista liczb: {string.Join(',', listaInt)}");
+            Console.WriteLine("--- Porządkowanie za pomocą własnej metody sortującej" + Environment.NewLine
+            + "zgodnie z naturalnym porządkiem zdefiniowanym w klasie Pracownik ---");
+            Sortowanie.Sortuj(Pracownicy);
+            Console.WriteLine(string.Join('\n', Pracownicy));
+            //listaInt.Sortuj();
+            listaInt.Sortuj();
+            Console.WriteLine(string.Join(',', listaInt));
+            Console.WriteLine();
+            Console.WriteLine("--- Porządkowanie za pomocą własnej metody sortującej" + Environment.NewLine
+            + "zgodnie z porządkiem zdefiniowanym w klasie typu IComparer ---");
+            Sortowanie.Sortuj(Pracownicy, new WgCzasuZatrudnieniaPotemWgWynagrodzeniaComparer());
+            Console.WriteLine(string.Join('\n', Pracownicy));
+            listaInt.Sortuj(new MyIntComparer());
+            Console.WriteLine(string.Join(',', listaInt));
+            Console.WriteLine("--- Porządkowanie za pomocą własnej metody sortującej" + Environment.NewLine
+            + "zgodnie z porządkiem zdefiniowanym przez delegat Comparison ---");
+            Comparison<Pracownik> porwonywacz = (p1, p2) => (p1.Wynagrodzenie != p2.Wynagrodzenie) ? (-1) * p1.Wynagrodzenie.CompareTo(p2.Wynagrodzenie) : p1.CzasZatrudnienia.CompareTo(p2.CzasZatrudnienia);
+            Sortowanie.Sortuj(Pracownicy, porwonywacz);
+            Console.WriteLine(string.Join(',', Pracownicy));
+            listaInt.Sortuj((x, y) => y - x);
+            Console.WriteLine(string.Join(',', listaInt));
+
+
+
+
+        }
+
+        private class MyIntComparer : IComparer<int>
+        {
+            public int Compare(int x, int y) => (y - x);
         }
 
         static void Krok4()
